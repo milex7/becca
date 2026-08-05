@@ -2,6 +2,32 @@
 
 集中维护可直接运行、依赖尽量少的日常工具脚本。
 
+## 东八区农历日期
+
+`scripts/calendar/chinese_lunar_date.py` 仅使用 Python 标准库，输出东八区（`Asia/Shanghai`）当前日期、农历日期、今年剩余天数、下一个农历正月初一的日期与距离，以及该日期前的工作日数。脚本内置 1900–2099 农历年数据；无需安装第三方依赖，也不需要 Node.js。
+
+```bash
+python3 scripts/calendar/chinese_lunar_date.py
+```
+
+可传入 `YYYY-MM-DD` 复算指定日期；“今年剩余”不包含当天，距离按日期差计算。可查询 1900-01-31 起至 2099 农历年范围内、且下一次正月初一仍在内置数据范围的日期：
+
+```bash
+python3 scripts/calendar/chinese_lunar_date.py 2026-08-05
+```
+
+输出：
+
+```text
+当前日期：2026-08-05（星期三，农历丙午年六月廿三）
+今年剩余：148 天
+下一个农历正月初一：2027-02-06，相距 185 天
+距离正月初一工作日：128 天
+估算工作日：26 天
+```
+
+工作日优先采用 [holiday-cn](https://github.com/NateScarlet/holiday-cn) 在线公开的当年国务院公告数据；网络、数据格式或公告覆盖不可用时，脚本回退到内置副本。两者均不可用时，按周一至周五工作、周末休息估算，并在输出中标注估算工作日数量。内置数据位于 `data/holiday-cn/`，并保留其 MIT 许可。
+
 ## 公网出口 IP 与地区查询
 
 `scripts/network/ip_location.py` 分别查询：
