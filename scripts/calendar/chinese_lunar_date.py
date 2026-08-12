@@ -253,6 +253,7 @@ def calendar_summary(
 
     next_new_year = lunar_new_year(lunar_year + 1)
     remaining_days = (date(value.year + 1, 1, 1) - value).days - 1
+    remaining_weeks, remaining_week_days = divmod(remaining_days, 7)
     workday_count, estimated_workday_count = workday_summary(
         value + timedelta(days=1), next_new_year, holiday_year_loader
     )
@@ -261,6 +262,8 @@ def calendar_summary(
         "weekday": WEEKDAY_NAMES[value.weekday()],
         "lunar_date": lunar_date(value),
         "remaining_days": remaining_days,
+        "remaining_weeks": remaining_weeks,
+        "remaining_week_days": remaining_week_days,
         "next_lunar_new_year": next_new_year.isoformat(),
         "days_to_lunar_new_year": (next_new_year - value).days,
         "workday_count": workday_count,
@@ -271,7 +274,8 @@ def calendar_summary(
 def format_summary(summary: dict[str, str | int]) -> str:
     lines = [
             f"当前日期：{summary['date']}（{summary['weekday']}，农历{summary['lunar_date']}）",
-            f"今年剩余：{summary['remaining_days']} 天",
+            "今年剩余："
+            f"{summary['remaining_days']} 天（{summary['remaining_weeks']} 周 {summary['remaining_week_days']} 天）",
             "下一个农历正月初一："
             f"{summary['next_lunar_new_year']}，相距 {summary['days_to_lunar_new_year']} 天",
             f"距离正月初一工作日：{summary['workday_count']} 天",
