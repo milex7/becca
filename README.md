@@ -21,3 +21,13 @@ python3 scripts/network/ip_location.py --proxy http://127.0.0.1:7890
 ```
 
 代理配置、JSON 输出、退出码和数据来源见 [公网出口 IP 查询说明](docs/ip_location.md)。
+
+## 随机密码生成
+
+`scripts/security/password_generator.py` 使用安全随机源生成数字与大小写英文字母密码，默认 12 位。
+
+```bash
+python3 scripts/security/password_generator.py
+```
+
+长度参数和字符范围见 [随机密码生成说明](docs/password_generator.md)。
